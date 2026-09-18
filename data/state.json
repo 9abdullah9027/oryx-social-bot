@@ -1,6 +1,12 @@
 {
-  "last_post_id": null,
-  "last_post_timestamp": null,
-  "last_check_timestamp": null,
-  "seen_post_ids": []
+  "last_post_id": "18192065821395177",
+  "last_post_timestamp": "2026-09-18T13:29:18+0000",
+  "last_check_timestamp": "2026-09-18T23:54:04.300Z",
+  "seen_post_ids": [
+    "18192065821395177",
+    "18460005838142741",
+    "18102204161004662",
+    "17886144387683654",
+    "18010058489974532"
+  ]
 }
