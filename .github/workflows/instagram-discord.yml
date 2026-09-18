@@ -1,0 +1,51 @@
+name: Instagram to Discord Notifier
+
+on:
+  schedule:
+    # Trigger approximately every minute (GitHub Actions cron)
+    - cron: '* * * * *'
+  workflow_dispatch:
+    # Allows manual execution from the GitHub Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  check-and-notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Check Instagram & Post to Discord
+        env:
+          INSTAGRAM_ACCOUNT_ID: ${{ secrets.INSTAGRAM_ACCOUNT_ID }}
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DISCORD_BOT_USERNAME: ${{ vars.DISCORD_BOT_USERNAME || 'ORYX Social' }}
+          DISCORD_BOT_AVATAR_URL: ${{ vars.DISCORD_BOT_AVATAR_URL }}
+          DISCORD_ROLE_ID: ${{ vars.DISCORD_ROLE_ID }}
+          INITIAL_NOTIFICATION: ${{ vars.INITIAL_NOTIFICATION || 'false' }}
+          POST_LIMIT: ${{ vars.POST_LIMIT || '5' }}
+        run: node src/index.js
+
+      - name: Commit Updated State
+        run: |
+          if [ -n "$(git status --porcelain data/state.json)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add data/state.json
+            git commit -m "chore(bot): update instagram post state [skip ci]"
+            git push
+            echo "State updated and committed successfully."
+          else
+            echo "No state changes detected. Skipping commit."
+          fi

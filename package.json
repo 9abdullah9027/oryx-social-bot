@@ -1,0 +1,26 @@
+{
+  "name": "oryx-social-bot",
+  "version": "1.0.0",
+  "description": "Automated Instagram-to-Discord notification bot using Meta Graph API, Discord Webhooks, and GitHub Actions",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test:webhook": "node src/scripts/test-webhook.js",
+    "check:token": "node src/scripts/check-token.js",
+    "test": "node --test test/*.test.js"
+  },
+  "keywords": [
+    "instagram",
+    "discord",
+    "webhook",
+    "bot",
+    "github-actions",
+    "meta-graph-api"
+  ],
+  "author": "ORYX",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

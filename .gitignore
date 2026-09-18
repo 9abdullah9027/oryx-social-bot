@@ -1,0 +1,18 @@
+# Environment & Secrets
+.env
+.env.*
+!.env.example
+*.log
+
+# Test Artifacts
+test/temp_state.json
+temp_state.json
+
+# Dependencies
+node_modules/
+
+# OS / Editor Files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
